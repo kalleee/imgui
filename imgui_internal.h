@@ -756,6 +756,10 @@ struct IMGUI_API ImDrawListSharedData
     // FIXME: Bake rounded corners fill/borders in atlas
     ImVec2          CircleVtx12[12];
 
+    // FIXME-ROUNDSHAPES: WIP + need to remove CircleVtx12 before PR
+    ImVector<ImVec4>* TexUvRoundCornerFilled;   // UV of filled round corner quad in the atlas
+    ImVector<ImVec4>* TexUvRoundCornerStroked;  // UV of stroked round corner quad in the atlas
+
     ImDrawListSharedData();
 };
 
@@ -1715,6 +1719,7 @@ namespace ImGui
 // ImFontAtlas internals
 IMGUI_API bool              ImFontAtlasBuildWithStbTruetype(ImFontAtlas* atlas);
 IMGUI_API void              ImFontAtlasBuildRegisterDefaultCustomRects(ImFontAtlas* atlas);
+IMGUI_API void              ImFontAtlasBuildRegisterRoundCornersCustomRects(ImFontAtlas* atlas);
 IMGUI_API void              ImFontAtlasBuildSetupFont(ImFontAtlas* atlas, ImFont* font, ImFontConfig* font_config, float ascent, float descent);
 IMGUI_API void              ImFontAtlasBuildPackCustomRects(ImFontAtlas* atlas, void* stbrp_context_opaque);
 IMGUI_API void              ImFontAtlasBuildFinish(ImFontAtlas* atlas);
