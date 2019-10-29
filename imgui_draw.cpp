@@ -1725,7 +1725,8 @@ ImFont* ImFontAtlas::AddFontFromMemoryCompressedBase85TTF(const char* compressed
 
 int ImFontAtlas::AddCustomRectRegular(unsigned int id, int width, int height)
 {
-    IM_ASSERT(id >= 0x10000);
+    // Breaking change on 2019/10/29 (1.74) - ImFontAtlas::AddCustomRectRegular() now requires an ID larger than 0x110000 (instead of larger than 0x10000)
+    IM_ASSERT(id >= 0x110000);
     IM_ASSERT(width > 0 && width <= 0xFFFF);
     IM_ASSERT(height > 0 && height <= 0xFFFF);
     ImFontAtlasCustomRect r;
@@ -2189,7 +2190,7 @@ void ImFontAtlasBuildFinish(ImFontAtlas* atlas)
     for (int i = 0; i < atlas->CustomRects.Size; i++)
     {
         const ImFontAtlasCustomRect& r = atlas->CustomRects[i];
-        if (r.Font == NULL || r.ID > 0x10000)
+        if (r.Font == NULL || r.ID >= IM_UNICODE_MAX_CODEPOINT)
             continue;
 
         IM_ASSERT(r.Font->ContainerAtlas == atlas);
@@ -2467,7 +2468,7 @@ void ImFontGlyphRangesBuilder::AddRanges(const ImWchar* ranges)
 
 void ImFontGlyphRangesBuilder::BuildRanges(ImVector<ImWchar>* out_ranges)
 {
-    int max_codepoint = 0x10000;
+    const int max_codepoint = IM_UNICODE_MAX_CODEPOINT;
     for (int n = 0; n < max_codepoint; n++)
         if (GetBit(n))
         {

@@ -3401,7 +3401,7 @@ void ImGui::ShowStyleEditor(ImGuiStyle* ref)
                     if (ImGui::TreeNode("Glyphs", "Glyphs (%d)", font->Glyphs.Size))
                     {
                         // Display all glyphs of the fonts in separate pages of 256 characters
-                        for (int base = 0; base < 0x10000; base += 256)
+                        for (int base = 0; base < IM_UNICODE_MAX_CODEPOINT; base += 256)
                         {
                             int count = 0;
                             for (int n = 0; n < 256; n++)
