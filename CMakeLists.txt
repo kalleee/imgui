@@ -9,9 +9,9 @@ set(SOURCE_FILES    imconfig.h
                     imstb_truetype
                     imgui_demo.cpp)
 
-#if (UNIX AND NOT APPLE)
-#    set(CMAKE_C_FLAGS "-fPIC")
-#    set(CMAKE_CXX_FLAGS "-fPIC")
-#endif ()
+if (UNIX AND NOT APPLE)
+    set(CMAKE_C_FLAGS "-fPIC")
+    set(CMAKE_CXX_FLAGS "-fPIC")
+endif ()
 
 add_library(ImGui STATIC ${SOURCE_FILES})
